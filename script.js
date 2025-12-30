@@ -33,7 +33,6 @@ var init = function () {
     ctx.fillRect(0, 0, width, height);
 
     var heartPosition = function (rad) {
-        //return [Math.sin(rad), Math.cos(rad)];
         return [Math.pow(Math.sin(rad), 3), -(15 * Math.cos(rad) - 5 * Math.cos(2 * rad) - 2 * Math.cos(3 * rad) - Math.cos(4 * rad))];
     };
     var scaleAndTranslate = function (pos, sx, sy, dx, dy) {
@@ -77,7 +76,8 @@ var init = function () {
             q: ~~(rand() * heartPointsCount),
             D: 2 * (i % 2) - 1,
             force: 0.2 * rand() + 0.7,
-            f: "hsla(0," + ~~(40 * rand() + 60) + "%," + ~~(60 * rand() + 20) + "%,.3)",
+            // 💜 COLOR MORADO AQUÍ 💜
+            f: "hsla(280, 80%, 60%, .4)",
             trace: []
         };
         for (var k = 0; k < traceCount; k++) e[i].trace[k] = {x: x, y: y};
@@ -104,16 +104,13 @@ var init = function () {
             if (10 > length) {
                 if (0.95 < rand()) {
                     u.q = ~~(rand() * heartPointsCount);
-                }
-                else {
+                } else {
                     if (0.99 < rand()) {
                         u.D *= -1;
                     }
                     u.q += u.D;
                     u.q %= heartPointsCount;
-                    if (0 > u.q) {
-                        u.q += heartPointsCount;
-                    }
+                    if (0 > u.q) u.q += heartPointsCount;
                 }
             }
             u.vx += -dx / length * u.speed;
@@ -133,9 +130,6 @@ var init = function () {
                 ctx.fillRect(u.trace[k].x, u.trace[k].y, 1, 1);
             }
         }
-        //ctx.fillStyle = "rgb(0, 0, 0)";
-        //for (i = u.trace.length; i--;) ctx.fillRect(targetPoints[i][0], targetPoints[i][1], 2, 2);
-
         window.requestAnimationFrame(loop, canvas);
     };
     loop();
